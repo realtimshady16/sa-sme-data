@@ -1,0 +1,12 @@
+# fetched source data — see data/README.md
+data/*
+!data/README.md
+
+# python
+__pycache__/
+*.pyc
+.venv/
+uv.lock
+
+# editor
+.obsidian/

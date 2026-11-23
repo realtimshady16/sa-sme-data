@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "sa-sme-data: what South Africa's public data says about small business and entrepreneurship"
+abstract: >-
+  A reproducible evidence base on South African small business: the source inventory,
+  the counts and size distribution of informal and formal businesses, who employs
+  people and why, fourteen years of informal-sector trend, and what the state spends.
+  Derived from Statistics South Africa unit records, SARS/National Treasury tax
+  statistics, and National Treasury budget and procurement data.
+authors:
+  - family-names: Tim
+    # add given-names and an ORCID here before publishing
+version: 0.1.0
+date-released: "2026-11-23"
+license: CC-BY-4.0
+license-url: "https://creativecommons.org/licenses/by/4.0/"
+repository-code: "https://github.com/realtimshady16/sa-sme-data"
+keywords:
+  - south africa
+  - small business
+  - informal sector
+  - entrepreneurship
+  - employment
+  - public data
+  - statistics

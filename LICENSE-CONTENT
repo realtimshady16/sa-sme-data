@@ -1,0 +1,11 @@
+Prose and derived tables in this repository (all Markdown files, and the derived
+figures they contain) are licensed under the Creative Commons Attribution 4.0
+International licence (CC BY 4.0).
+
+Full text: https://creativecommons.org/licenses/by/4.0/legalcode
+Human-readable summary: https://creativecommons.org/licenses/by/4.0/
+
+Attribution: "sa-sme-data, Tim, 2026", and where a figure is reproduced from a
+primary source, cite that source too — see NOTICE.md for the list.
+
+Code (everything under scripts/) is MIT licensed; see LICENSE.

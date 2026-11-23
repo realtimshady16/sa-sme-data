@@ -1,7 +1,5 @@
 # Procurement dashboard — transcribed figures
 
-*Copied from the working notes of the session that produced this repo. Internal file paths (`data/sa-entrepreneurship/…`, `notes/2026-11-23-…`) refer to that workspace; the data layout here is documented in `../data/README.md`.*
-
 Read 2026-11-23 in a browser from National Treasury's **Procurement Dashboard**, a
 Power BI *paginated report* (20 pages) embedded at:
 

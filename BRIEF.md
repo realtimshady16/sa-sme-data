@@ -84,6 +84,6 @@ One upcoming test is free. From 1 April 2026 the VAT registration threshold rise
 | Procurement shares | Treasury's **Procurement Dashboard** (Power BI, FY2025/26, all spheres) — transcribed from its accessibility layer; no export exists |
 | Threshold change | **Budget Review 2026**, Tables 4.6–4.7 |
 
-Scripts: `data/sa-entrepreneurship/` — `treasury/scripts/{sese_microdata,sese_crosstabs,qlfs_employers,treasury_numbers,ene_pivot}.py` and `scripts/sese_series.py`. Full notes in `notes/2026-11-23-*.md`, including the corrections. Full notes and corrections in `notes/2026-11-23-*.md`.
+Scripts: `data/` — `treasury/scripts/{sese_microdata,sese_crosstabs,qlfs_employers,treasury_numbers,ene_pivot}.py` and `scripts/sese_series.py`. Full notes in `notes/2026-11-23-*.md`, including the corrections. Full notes and corrections in `notes/2026-11-23-*.md`.
 
 **What this brief does not claim**: that entrepreneurship is unimportant, that formalisation is a policy failure, that the SME procurement share is or is not compliant with the set-aside, or anything from the reported *level* of informal profit — SESE's median monthly profit (R2 000) exceeds its own median annual turnover (R16 000), so at least one of those questions is badly answered and neither level is quoted here. Each of those is a separate question this data cannot settle — the last one because contractor size is unrecorded on a third of spend.

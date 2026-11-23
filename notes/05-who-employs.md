@@ -1,8 +1,6 @@
 # Who employs people in the informal sector, and why it matters that it's mostly the desperate
 
-*Copied from the working notes of the session that produced this repo. Internal file paths (`data/sa-entrepreneurship/…`, `notes/2026-11-23-…`) refer to that workspace; the data layout here is documented in `../data/README.md`.*
-
-*2026-11-23. Cross-tabs from the SESE 2023 microdata (`scripts/sese_crosstabs.py`), weighted throughout, with the unweighted cell size beside every estimate. Follows `notes/2026-11-23-sese-2023-microdata-first-analysis.md` (the headline counts) and the QLFS reconciliation.*
+*2026-11-23. Cross-tabs from the SESE 2023 microdata (`scripts/sese_crosstabs.py`), weighted throughout, with the unweighted cell size beside every estimate. Follows `notes/04-sese-2023-microdata.md` (the headline counts) and the QLFS reconciliation.*
 
 ## 1. Why they started
 
@@ -84,7 +82,7 @@ It also reorders the usual policy menu. Seed capital and start-up training targe
 ## 8. Reproduce
 
 ```bash
-cd data/sa-entrepreneurship/sese-microdata
+cd data/sese-microdata
 uv run --with pandas python ../treasury/scripts/sese_crosstabs.py
 ```
 

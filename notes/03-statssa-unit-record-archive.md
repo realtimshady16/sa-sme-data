@@ -1,8 +1,6 @@
 # Stats SA's iSiBaloweb: the unit-record archive we should have started with
 
-*Copied from the working notes of the session that produced this repo. Internal file paths (`data/sa-entrepreneurship/…`, `notes/2026-11-23-…`) refer to that workspace; the data layout here is documented in `../data/README.md`.*
-
-*2026-11-23. Tim pointed at the iSiBaloweb domain and its Product Access accordions. It is not a PDF portal — it is Stats SA's ungated **unit-record archive**: nearly every household and establishment survey, back to 2000, as CSV/SPSS/SAS/STATA, with no registration and no application. This note is the map plus what we pulled.*
+*2026-11-23. This started from the iSiBaloweb domain and its Product Access accordions. It is not a PDF portal — it is Stats SA's ungated **unit-record archive**: nearly every household and establishment survey, back to 2000, as CSV/SPSS/SAS/STATA, with no registration and no application. This note is the map plus what we pulled.*
 
 ## 1. The access finding (this is the practical bit)
 
@@ -39,7 +37,7 @@ Two more properties worth knowing:
 
 ## 3. What we pulled (11 files, 77 MB)
 
-`data/sa-entrepreneurship/statsa-units/`, hashes and status in `manifest.tsv`:
+`data/statsa-units/`, hashes and status in `manifest.tsv`:
 
 | File | Zip | Unpacks to | Why this one |
 |---|---|---|---|
@@ -79,13 +77,11 @@ What it does **not** fix: there is still no panel with business identifiers, so 
 ## 6. Reproduce
 
 ```bash
-cd data/sa-entrepreneurship
-python3 scripts/statsa_fetch.py statsa-units/priority-urls.txt   --out statsa-units
-python3 scripts/statsa_fetch.py statsa-units/priority-urls-2.txt --out statsa-units
+python3 scripts/statsa_fetch.py urls.txt --out data/statsa/work
 ```
 The manifest merges across runs (two runs writing one path truncated each other once — fixed).
 
-Enumeration was done in the browser through the Product Access accordion:
+Enumeration was done in a browser through the Product Access accordion:
 `/pages/labour.php`, `/pages/social.php`, `/pages/povertyinquality.php`,
 `/pages/vital.php`, `/pages/dataapps.php`, plus
 `/pages/surveys/ets/{monthly,quarterly,annual}/`.

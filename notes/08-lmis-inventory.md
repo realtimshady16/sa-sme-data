@@ -1,14 +1,12 @@
 # South Africa's LMIS: inventory, download, and reconciliation against QLFS
 
-*Copied from the working notes of the session that produced this repo. Internal file paths (`data/sa-entrepreneurship/…`, `notes/2026-11-23-…`) refer to that workspace; the data layout here is documented in `../data/README.md`.*
-
 **2026-11-23 · research note · data source: Department of Employment and Labour (DEL) Labour Market Information System**
 
 ## TL;DR
 
-The LMIS is a real, working **SDMX** data platform. Its front end is a SIS-CC ".Stat Suite" data explorer at `de-lmis.labour.gov.za`, backed by an SDMX REST API at `sdmx-lmis.labour.gov.za/rest`. Of **118 dataflows**, **98 return real data** (downloaded in full as SDMX-CSV into `data/sa-entrepreneurship/lmis/raw/`), **19 return nothing** (15 × "mapping set" 404, 4 × a 422 structure bug), and **1 is a leftover pentest artifact** (not touched).
+The LMIS is a real, working **SDMX** data platform. Its front end is a SIS-CC ".Stat Suite" data explorer at `de-lmis.labour.gov.za`, backed by an SDMX REST API at `sdmx-lmis.labour.gov.za/rest`. Of **118 dataflows**, **98 return real data** (downloaded in full as SDMX-CSV into `data/lmis/raw/`), **19 return nothing** (15 × "mapping set" 404, 4 × a 422 structure bug), and **1 is a leftover pentest artifact** (not touched).
 
-The reconciliation is decisive but nuanced: **the LMIS's QLFS-derived numbers are bit-for-bit identical to Stats SA's QLFS** (verified on total employed, unemployment, labour force, and status-in-employment for the overlapping quarters) — so it is *real, current QLFS data*, **not** an independent source (the data footnotes read "Source: StatsSA QLFS"). But it **lags Stats SA's own releases** (nothing past **2026-Q2** anywhere; Q3 2026 is absent), and the series Tim most wants — **informal employment levels and any "sector" split — are the empty ones**.
+The reconciliation is decisive but nuanced: **the LMIS's QLFS-derived numbers are bit-for-bit identical to Stats SA's QLFS** (verified on total employed, unemployment, labour force, and status-in-employment for the overlapping quarters) — so it is *real, current QLFS data*, **not** an independent source (the data footnotes read "Source: StatsSA QLFS"). But it **lags Stats SA's own releases** (nothing past **2026-Q2** anywhere; Q3 2026 is absent), and the series that mattered most — **informal employment levels and any "sector" split — are the empty ones**.
 
 Every dataflow is annotated `NonProductionDataflow=true` and every data message carries the SDMX **`test: true`** flag. So the platform is explicitly marked non-production, even though the data it serves is real.
 
@@ -25,7 +23,7 @@ Every dataflow is annotated `NonProductionDataflow=true` and every data message 
 
 ## 2. Access method (how to repeat)
 
-The earlier aborted run's probe files (`data/sa-entrepreneurship/lmis/probe/`) were correct about the base URL but **wrong in its provisional conclusion** that the API might be empty — that came from testing a single dataflow that happens to be one of the empty ones. The working recipe:
+The earlier aborted run's probe files (`data/lmis/probe/`) were correct about the base URL but **wrong in its provisional conclusion** that the API might be empty — that came from testing a single dataflow that happens to be one of the empty ones. The working recipe:
 
 ```bash
 # list all dataflows (structure JSON)
@@ -53,7 +51,7 @@ Reproducibility: `scripts/sweep.py` does the full 118-flow sweep and writes `man
 | Return nothing | 19 (15 × 404 "mapping set", 4 × 422 structure bug) |
 | Pentest artifact (not queried) | 1 (`ZZ_PENTEST_I26224`) |
 
-Downloads: `data/sa-entrepreneurship/lmis/raw/` (98 files, one per dataflow, named by id). Provenance (request URL, retrieved-at, rows, sha256, status, period span, notes): `data/sa-entrepreneurship/lmis/manifest.tsv`.
+Downloads: `data/lmis/raw/` (98 files, one per dataflow, named by id). Provenance (request URL, retrieved-at, rows, sha256, status, period span, notes): `data/lmis/manifest.tsv`.
 
 ## 4. Is the data non-production / test?
 
@@ -69,7 +67,7 @@ What this *means*: the labels look like a development/launch artifact that was n
 
 ## 5. Reconciliation against QLFS Q3 2026
 
-Tim's QLFS Q3 2026 figures (thousands): total employed 16 840; informal sector 3 476; formal sector 12 340; household sector 1 024; employers 717; own-account 2 046; unemployment rate 33.7%. (All confirmed present in `data/sa-entrepreneurship/raw/qlfs_q3_2026.txt`, P0211, released 10 Nov 2026.)
+The QLFS Q3 2026 figures (thousands): total employed 16 840; informal sector 3 476; formal sector 12 340; household sector 1 024; employers 717; own-account 2 046; unemployment rate 33.7%. (From Stats SA's QLFS P0211 release, Q3 2026, published 10 November 2026.)
 
 **Finding 1 — the QLFS-derived flows are exact copies, and they pass trivially.**
 
@@ -87,9 +85,9 @@ LMIS unemployment / labour force, 2026-Q2: unemployed **8 481**, labour force **
 
 **Finding 3 — Q3 2026 does not exist in the LMIS.** The newest period anywhere in the 98 downloaded flows is **2026-Q2**, and coverage is ragged: most QLFS flows run 2008-Q1 → 2026-Q2, but province-level employment stops at 2025-Q4, the unemployment *rate* flows stop at **2025-Q2**, and the informal-employment *rate* flows stop at **2024-Q4**. The LMIS lags Stats SA by one to several quarters depending on the series. So the reconciliation against **Q3 2026** can only be done by proxy: the latest LMIS quarter (Q2 2026) matches QLFS exactly, which is strong evidence the platform is a faithful mirror — but Q3 2026 itself is simply absent.
 
-**Finding 4 — the "informal sector" split is not in the LMIS at all.** There is no *sector* dimension (formal/informal/households) in any dataflow. The closest concept, "informal employment (non-agriculture)", is (a) a different, broader concept than "informal sector", and (b) broken: all four **level** flows (`DF_IE_SEX_*`) return 404 (no data mapped), and the **rate** flows (`DF_IER_SEX_*`) stop at 2024-Q4. So **Tim's informal-sector figure (3 476) cannot be checked against the LMIS** — the data isn't there. Separately, the QLFS itself notes (P0211 line 177) that formal/informal sector *and* employment definitions "have undergone significant revisions" (move to the 19th ICLS, agriculture now folded into the sector split), which is an extra reason the old "non-agriculture" LMIS informal-employment series won't line up with the new sector figures.
+**Finding 4 — the "informal sector" split is not in the LMIS at all.** There is no *sector* dimension (formal/informal/households) in any dataflow. The closest concept, "informal employment (non-agriculture)", is (a) a different, broader concept than "informal sector", and (b) broken: all four **level** flows (`DF_IE_SEX_*`) return 404 (no data mapped), and the **rate** flows (`DF_IER_SEX_*`) stop at 2024-Q4. So the **informal-sector figure (3 476) cannot be checked against the LMIS** — the data isn't there. Separately, the QLFS itself notes (P0211 line 177) that formal/informal sector *and* employment definitions "have undergone significant revisions" (move to the 19th ICLS, agriculture now folded into the sector split), which is an extra reason the old "non-agriculture" LMIS informal-employment series won't line up with the new sector figures.
 
-**Verdict (one sentence):** the LMIS is a faithful but lagging mirror of QLFS for the standard labour-market indicators (exact match on everything that overlaps), and it has **no usable informal-sector data** — so for Tim's informal-sector question it is neither an independent cross-check nor a usable source, at least as it stands today.
+**Verdict (one sentence):** the LMIS is a faithful but lagging mirror of QLFS for the standard labour-market indicators (exact match on everything that overlaps), and it has **no usable informal-sector data** — so for an informal-sector question it is neither an independent cross-check nor a usable source, at least as it stands today.
 
 ## 6. Licence / terms
 
@@ -121,7 +119,7 @@ LMIS unemployment / labour force, 2026-Q2: unemployed **8 481**, labour force **
 
 **4 flows → 422** `"Data Structure … does not contain component with id: REF_AREA"` — a server-side bug where the NSI web service tries to attach a province (`REF_AREA`) component to schemas that don't have one (`DSD_ECO_SEX`, `DSD_AGE`): `DF_EMP_SEX_ECO` (employment by sex **and industry** — the one that would matter for entrepreneurship-by-industry), `DF_SENAE_SEX_ECO`, `DF_TRU_SEX_ECO`, `DF_WOKRS_REG_AGE`. I read the exact error body for all four; it is the same message. This looks fixable on DEL's side (the constraint is misconfigured), not something a client can work around with a different key.
 
-Net effect for Tim's interest: the two *industry* breakdowns of employment that a researcher would reach for (`DF_EMP_SEX_ECO` employment-by-sex-by-industry, `DF_WORKF_ECO` workforce-by-industry) are **broken/empty**; the only working employment-by-industry series is the oddly named `DF_EMP_INV_ECO` ("employees involved").
+Net effect for this question: the two *industry* breakdowns of employment that a researcher would reach for (`DF_EMP_SEX_ECO` employment-by-sex-by-industry, `DF_WORKF_ECO` workforce-by-industry) are **broken/empty**; the only working employment-by-industry series is the oddly named `DF_EMP_INV_ECO` ("employees involved").
 
 ## 9. Full dataflow table
 
@@ -255,15 +253,15 @@ Net effect for Tim's interest: the two *industry* breakdowns of employment that 
 1. **When will DEL flip the production flags?** `NonProductionDataflow=true`, `isFinal=false`, and `meta.test=true` on every message are the only hard blockers to treating this as a citable source. If they're legacy labels, DEL should remove them; if not, the data should not be relied on.
 2. **Why is the data so ragged?** Latest period ranges from 2026-Q2 down to 2023-Q3 across flows, and 19 flows are empty/broken. This looks like an ingestion pipeline that was partially populated and not maintained uniformly.
 3. **Will the informal-employment *level* flows (`DF_IE_SEX_*`) ever be loaded?** They're the gap between what the LMIS *claims* (informal employment) and what it *serves* (only 3 of 4 rate flows, through 2024-Q4).
-4. **The 422 "does not contain REF_AREA" bug** on the `ECO_SEX`/`AGE` schemas is a server-side constraint misconfiguration — worth reporting to DEL if Tim wants employment-by-industry.
+4. **The 422 "does not contain REF_AREA" bug** on the `ECO_SEX`/`AGE` schemas is a server-side constraint misconfiguration — worth reporting to DEL by anyone who needs employment-by-industry.
 5. **Terms & conditions** are a placeholder (`example.org`). There is no stated reuse licence; who to ask for a data-use agreement is itself open.
 
 ## 11. Provenance / artifacts
 
-- Downloads: `data/sa-entrepreneurship/lmis/raw/*.csv` (98 files, one per dataflow).
-- Provenance manifest: `data/sa-entrepreneurship/lmis/manifest.tsv` (request URL, retrieved-at, rows, sha256, status, period span, notes).
-- Scripts: `data/sa-entrepreneurship/lmis/scripts/sweep.py` (full sweep + manifest), `scripts/probe_data.py` (probe). Run `python3 -I`.
-- Prior probe (kept as-is): `data/sa-entrepreneurship/lmis/probe/`.
-- QLFS reference: `data/sa-entrepreneurship/raw/qlfs_q3_2026.txt` (P0211, released 10 Nov 2026).
+- Downloads: `data/lmis/raw/*.csv` (98 files, one per dataflow).
+- Provenance manifest: `data/lmis/manifest.tsv` (request URL, retrieved-at, rows, sha256, status, period span, notes).
+- Scripts: `data/lmis/scripts/sweep.py` (full sweep + manifest), `scripts/probe_data.py` (probe). Run `python3 -I`.
+- Prior probe (kept as-is): `data/lmis/probe/`.
+- QLFS reference: `data/raw/qlfs_q3_2026.txt` (P0211, released 10 Nov 2026).
 
 *What I verified: every number in §5 was read directly from the downloaded CSVs and cross-checked against the QLFS text. The `test=true` flag was read from five separate JSON responses. I did not read the "LMIS Master Plan" or "Report" PDFs in full, and I did not attempt the pentest dataflow.*

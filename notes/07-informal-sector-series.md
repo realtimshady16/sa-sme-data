@@ -1,8 +1,6 @@
 # The informal-sector series, 2009 → 2023: more businesses, fewer employers
 
-*Copied from the working notes of the session that produced this repo. Internal file paths (`data/sa-entrepreneurship/…`, `notes/2026-11-23-…`) refer to that workspace; the data layout here is documented in `../data/README.md`.*
-
-*2026-11-23. Four SESE waves harmonised from Stats SA unit records (2009, 2013, 2017, 2023). Script `scripts/sese_series.py`; deflators from World Bank CPI for ZAF. This is the "series rather than the answer" version of `notes/2026-11-23-brief-entrepreneurship-jobs.md`.*
+*2026-11-23. Four SESE waves harmonised from Stats SA unit records (2009, 2013, 2017, 2023). Script `scripts/sese_series.py`; deflators from World Bank CPI for ZAF. This is the "series rather than the answer" version of `BRIEF.md`.*
 
 ## 1. Validation first, because harmonising four waves is where errors live
 
@@ -67,7 +65,7 @@ The brief says entrepreneurship in South Africa is mostly survival and that jobs
 ## 7. Reproduce
 
 ```bash
-cd data/sa-entrepreneurship/statsa-units/work
+cd data/statsa-units/work
 unzip -o ../data/SESE2009.zip -d sese2009 && unzip -o ../data/SESE2013.zip -d sese2013 \
   && unzip -o ../data/SESE2017.zip -d sese2017
 uv run --with pandas python ../../scripts/sese_series.py

@@ -1,7 +1,5 @@
 # QLFS employer counts, and the gap that wasn't there
 
-*Copied from the working notes of the session that produced this repo. Internal file paths (`data/sa-entrepreneurship/…`, `notes/2026-11-23-…`) refer to that workspace; the data layout here is documented in `../data/README.md`.*
-
 *2026-11-23. Computed from QLFS 2026 Q3 unit records (`statssa-units/data/QLFS202603.zip`), codebook from the same release's metadata PDF. This closes the "717k vs 283k" discrepancy I raised earlier in the thread — it was my error, not the data's.*
 
 ## 1. The numbers (QLFS Q3 2026, weighted)
@@ -32,7 +30,7 @@ The informal sector decomposes as 286 512 employers + 1 466 334 own-account + 38
 | **QLFS 2026 Q3** (ICSE-18 employer, informal sector) | **286 512** | 2026 |
 | **SESE 2023** (businesses with any employees) | **283 348** | 2023 |
 
-**1.1% apart, three years and two instruments.** There is no 2.5× discrepancy. What happened: earlier in this thread I read "employer 795k" from the LMIS/QLFS status series as *informal* employers, and carried "717k" into two notes, the hand-off and my summary to Tim as an unreconciled gap on the most important number in the argument. It is the **national total** (767 894 here), of which 481 383 are formal and 286 512 informal. I mistook a total for a subset.
+**1.1% apart, three years and two instruments.** There is no 2.5× discrepancy. What happened: earlier in this work I read "employer 795k" from the LMIS/QLFS status series as *informal* employers, and carried "717k" into two notes and my own summary as an unreconciled gap on the most important number in the argument. It is the **national total** (767 894 here), of which 481 383 are formal and 286 512 informal. I mistook a total for a subset.
 
 The consistency also survives a mechanical check: among informal-sector self-employed, the number who answer "yes" to hiring (`Q413aHIRE`) is **286 512** — exactly the ICSE employer count, because the classification is derived from that question. Two independent derivations, same number.
 
@@ -49,7 +47,7 @@ Informal-sector **employees** total **1 354 618**, but informal *employers* × t
 ## 5. Reproduce
 
 ```bash
-cd data/sa-entrepreneurship/statsa-units/work && unzip -o ../data/QLFS202603.zip
+cd data/statsa-units/work && unzip -o ../data/QLFS202603.zip
 uv run --with pandas python ../../scripts/qlfs_employers.py
 ```
 
@@ -57,7 +55,7 @@ Codebook: `metadata/QLFS/2026/Qtr03/…metadata.pdf` on iSiBaloweb (fetched to `
 
 ## 6. Corrections this forces
 
-- `notes/2026-11-23-sese-2023-microdata-first-analysis.md` §5 said the QLFS/SESE gap was "2.5× on the single number that decides whether informal firms create jobs". **Wrong** — the two agree to 1.1%.
+- `notes/04-sese-2023-microdata.md` §5 said the QLFS/SESE gap was "2.5× on the single number that decides whether informal firms create jobs". **Wrong** — the two agree to 1.1%.
 - Addendum 5 of the SA inventory note carries the same wrong claim.
-- The hand-off entry for this session carries it too.
+- Two earlier working notes carried it too (both corrected).
 - The *substantive* conclusion is unaffected and in fact strengthened: **283–287k informal employers, ~26–30 paid jobs per 100 informal businesses**, and the middle of the turnover distribution does the hiring. The number is now confirmed by two official instruments rather than asserted from one.

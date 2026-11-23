@@ -1,10 +1,8 @@
 # SESE 2023 microdata: the first firm-level employment numbers for the informal sector
 
-*Copied from the working notes of the session that produced this repo. Internal file paths (`data/sa-entrepreneurship/…`, `notes/2026-11-23-…`) refer to that workspace; the data layout here is documented in `../data/README.md`.*
+*2026-11-23. The SESE 2023 zip was downloaded from Stats SA directly (3 532 700-byte CSV, 25 April 2025 inside the zip, 1 583 records × 201 variables, `Weight` included). It is the unit-record file, not the documentation and what the inventory note said was missing. This note is the first pass at it, and it overturns one of my own claims.*
 
-*2026-11-23. Tim downloaded `SESE2023.zip` from Stats SA directly (3 stall 532 700-byte CSV, 25 April 2025 inside the zip, 1 583 records × 201 variables, `Weight` included). It is the unit-record file, not the documentation — which is what the earlier thread had and what the inventory note said was missing. This note is the first pass at it, and it overturns one of my own claims.*
-
-File: `data/sa-entrepreneurship/sese-microdata/SESE2023.csv`. Reproduce with `scripts/sese_microdata.py`. Weighted throughout (`Weight`); unweighted n = 1 583 business records for 1 482 persons.
+File: `data/sese-microdata/SESE2023.csv`. Reproduce with `scripts/sese_microdata.py`. Weighted throughout (`Weight`); unweighted n = 1 583 business records for 1 482 persons.
 
 ## 1. It checks out
 
@@ -109,7 +107,7 @@ Median turnover of R16k a year is about **R1 300 a month**. These are not micro-
 - **It kills my own claim.** I wrote in the Treasury note (§11) and said in the session that "nothing public links a business to the number of people it employs". That is false for the informal sector and was false the whole time: SESE has asked for employee counts since 2001, and the microdata has them at unit level with weights. The correct statement is narrower: **there is no firm-level employment data for the *formal* segment** (nothing in the company tax return, QES is by establishment and industry, ETI is claimant-only), and **no panel** anywhere.
 - **It converts the "informal sector" from a count into a distribution.** The inventory note could say 1.9m owners existed; it can now say what they turn over, earn, and employ, and that 85.7% employ nobody.
 - **It sharpens the jobs argument.** The earlier framing was "85% of informal businesses are survivalist". The defensible version is: **83.4% turn over under R50k and employ 15–19 paid workers per 100 businesses, while the 1.1% above R500k employ 157 per 100.** Concentration, not average, is the story.
-- **The apparent QLFS gap closed, and it closed in SESE's favour.** I wrote that QLFS counts 717k informal-sector employers against SESE's 283k — a 2.5× gap. Computing it from the QLFS Q3 2026 unit records instead of quoting a table gives **286 512 informal-sector employers**, against SESE's **283 348**: a **1.1% difference across three years and two instruments**. The 717k figure was the *national total* of employers (767 894, of which 481 383 formal), which I had read as the informal subset. **Correction (same day): there is no 2.5× gap — QLFS Q3 2026 puts informal-sector employers at 286 512 against SESE's 283 348, a 1.1% difference; the 717k I quoted was the national total of employers, not the informal subset.** See `notes/2026-11-23-qlfs-employer-count-reconciliation.md`.
+- **The apparent QLFS gap closed, and it closed in SESE's favour.** I wrote that QLFS counts 717k informal-sector employers against SESE's 283k — a 2.5× gap. Computing it from the QLFS Q3 2026 unit records instead of quoting a table gives **286 512 informal-sector employers**, against SESE's **283 348**: a **1.1% difference across three years and two instruments**. The 717k figure was the *national total* of employers (767 894, of which 481 383 formal), which I had read as the informal subset. **Correction (same day): there is no 2.5× gap — QLFS Q3 2026 puts informal-sector employers at 286 512 against SESE's 283 348, a 1.1% difference; the 717k I quoted was the national total of employers, not the informal subset.** See `notes/06-qlfs-employer-reconciliation.md`.
 
 ## 6. Caveats
 
@@ -124,11 +122,11 @@ Median turnover of R16k a year is about **R1 300 a month**. These are not micro-
 ## 7. Reproduce
 
 ```
-cd data/sa-entrepreneurship/sese-microdata
+cd data/sese-microdata
 uv run --with pandas python ../treasury/scripts/sese_microdata.py
 ```
 
-Source: `SESE2023.csv` (3 532 700 bytes, from `SESE2023.zip`, downloaded from Stats SA 2026-11-23). Questionnaire, release report and record layout are in `data/sa-entrepreneurship/datafirst/`.
+Source: `SESE2023.csv` (3 532 700 bytes, from `SESE2023.zip`, downloaded from Stats SA 2026-11-23). Questionnaire, release report and record layout are in `data/datafirst/`.
 
 ## Glossary
 

@@ -1,10 +1,8 @@
 # Treasury + SARS tax data: the formal-business denominator, and the first public "what happens next" series
 
-*Copied from the working notes of the session that produced this repo. Internal file paths (`data/sa-entrepreneurship/…`, `notes/2026-11-23-…`) refer to that workspace; the data layout here is documented in `../data/README.md`.*
+*2026-11-23. Follows `notes/01-data-inventory.md` (which lists the sources and the first-pass findings) and the LMIS note. Trigger: after SESE/QLFS/FinScope/DEL/LMIS, the open question was whether Treasury's public releases could supply what the household surveys can't — a count of **formal** businesses by size, and any evidence on **what happens to them over time**. They can, for one segment, better than expected.*
 
-*2026-11-23. Follows `notes/2026-11-23-sa-entrepreneurship-data-inventory.md` (which lists the sources and the first-pass findings) and the LMIS note. Trigger: after SESE/QLFS/FinScope/DEL/LMIS, the open question was whether Treasury's public releases could supply what the household surveys can't — a count of **formal** businesses by size, and any evidence on **what happens to them over time**. They can, for one segment, better than expected.*
-
-Raw files, scripts and extracted text: `data/sa-entrepreneurship/treasury/`. Every number below is recomputed from the published workbook by `scripts/treasury_numbers.py` (see §13), not typed in from a summary. Prose quotes come from `raw/2025_Tax_Statistics_main.txt` (the 2025 edition, released 5 December 2025) and `raw/budget2026_FullBR.txt` (Budget Review 2026).
+Raw files, scripts and extracted text: `data/treasury/`. Every number below is recomputed from the published workbook by `scripts/treasury_numbers.py` (see §13), not typed in from a summary. Prose quotes come from `raw/2025_Tax_Statistics_main.txt` (the 2025 edition, released 5 December 2025) and `raw/budget2026_FullBR.txt` (Budget Review 2026).
 
 ## 1. What was actually reachable
 
@@ -236,7 +234,7 @@ Government is the largest customer in the economy (R1.08tn appropriated). What T
 
 The downloadable values don't survive a spot check. Feb 2026 has 44 award records totalling R20.9bn, with 16 awards above R100m — including **R5.32bn from Eskom**, **R4.20bn from the National Metrology Institute**, **R2.18bn from Artscape** (a publicly funded theatre) and R2.10bn from Justice. A single RFQ from a metrology institute or an opera house is not worth billions. `SupplierID` is `0` on every supplier record, so there's no key back to the CSD. **Do not total those fields.**
 
-**The dashboard, for FY2025/26** (all four quarters, all spheres/provinces/departments; transcribed from the report's accessibility text layer, which states exact rand and percent per visual — full transcript in `data/sa-entrepreneurship/treasury/procurement-dashboard-2025-26.md`):
+**The dashboard, for FY2025/26** (all four quarters, all spheres/provinces/departments; transcribed from the report's accessibility text layer, which states exact rand and percent per visual — full transcript in `data/treasury/procurement-dashboard-2025-26.md`):
 
 | | Spend | Share of total |
 |---|---|---|
@@ -272,7 +270,7 @@ Practical note for whoever re-reads this: open the URL in a browser and use the 
 ## 11. What this still cannot answer
 
 - **A survival curve.** §5 now gives the ten-year point (53.6%). Five-year survival, and survival by size at entry, would need the cohort run for shorter windows or entry/exit counts — SARS has both, and publishes neither.
-- **Job creation per business, for *formal* firms.** Tax data has no employment field at all for companies; QES is by establishment and industry; ETI is claimant-only. **Correction:** I first wrote that nothing public links a business to its employee count — that is false for the informal sector, where the SESE 2023 microdata does exactly that (see `notes/2026-11-23-sese-2023-microdata-first-analysis.md`: 85.7% of informal businesses employ nobody, 26 paid jobs per 100 businesses, and jobs concentrate in the R50k–R250k turnover band). The gap is the formal segment and the panel, not employment as such.
+- **Job creation per business, for *formal* firms.** Tax data has no employment field at all for companies; QES is by establishment and industry; ETI is claimant-only. **Correction:** I first wrote that nothing public links a business to its employee count — that is false for the informal sector, where the SESE 2023 microdata does exactly that (see `notes/04-sese-2023-microdata.md`: 85.7% of informal businesses employ nobody, 26 paid jobs per 100 businesses, and jobs concentrate in the R50k–R250k turnover band). The gap is the formal segment and the panel, not employment as such.
 - **Startup rates.** Registration dates on the CIT register would give company *age* (Table 3.8 has age bands, 2014 and 2023 only), but nothing here is a birth rate per year.
 - **Informal business, at all.** Everything in this note is above the VAT or CIT threshold; the 1.9m SESE owners are invisible here, as they are in every administrative dataset.
 - **Procurement below national/provincial level**, and the audit trail from reservation to award. §9 gives the shares; it cannot say whether any given set-aside was applied.
@@ -288,13 +286,13 @@ Practical note for whoever re-reads this: open the URL in a browser and use the 
 - **Register series are contaminated by clean-up** (§2). Don't use register growth as a business-formation series.
 - **Licence.** Tax Statistics is a joint National Treasury/SARS publication, © SARS, all rights reserved on the site; the OCDS packages are ODC-PDDL. This note quotes and derives for personal research; don't republish the tables.
 - **The dashboard figures are transcribed, not downloaded.** A Power BI paginated report has no export in the embed, so §9's numbers come from reading its accessibility text layer. They are exact to the rand as stated by the report, but they are a single point-in-time read of a filterable report whose filter state (2025/26, all spheres) I have recorded — if Treasury republishes or changes the model, they cannot be re-derived from a file.
-- **Not read:** the Power BI payments dashboard, QES (downloaded in the earlier thread, still unread), and the Forecast/Budget Facility material.
+- **Not read:** the Power BI payments dashboard, QES (downloaded in earlier work, still unread), and the Forecast/Budget Facility material.
 - **vulekamali correction.** My first pass recorded its downloads as dead — that was my own URL construction, not the site: the resource files sit at `/datasets/<dataset>/resources/<file>`, one level *above* the per-year page that links them. The CSV is alive (4.7MB) and matches the published ENE to the rand. The genuinely dead part is `data.vulekamali.gov.za`, the "Data Portal API" the footer links to (NXDOMAIN).
 
 ## 13. Reproduce
 
 ```
-cd data/sa-entrepreneurship/treasury
+cd data/treasury
 uv run --with openpyxl python scripts/treasury_numbers.py     # every figure in §2-§7
 python3 scripts/ocds_summary.py raw/01012026.json raw/01022026.json   # §9
 uv run --with pandas python scripts/ene_pivot.py                      # §7, programme detail

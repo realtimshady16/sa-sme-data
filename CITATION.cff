@@ -16,6 +16,11 @@ date-released: "2026-11-23"
 license: CC-BY-4.0
 license-url: "https://creativecommons.org/licenses/by/4.0/"
 repository-code: "https://github.com/realtimshady16/sa-sme-data"
+doi: "10.5281/zenodo.24467169"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.24467168"
+    description: "Concept DOI — always resolves to the latest version"
 keywords:
   - south africa
   - small business

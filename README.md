@@ -1,5 +1,7 @@
 # sa-sme-data
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24467168.svg)](https://doi.org/10.5281/zenodo.24467168)
+
 What South Africa's public data says about small business and entrepreneurship: the inventory, the numbers, and the scripts that re-derive every figure.
 
 The short answer is in **[BRIEF.md](BRIEF.md)** (1,200 words). The working is in [`notes/`](notes/).
@@ -76,6 +78,28 @@ Four errors found in this work are recorded in place rather than tidied away: a 
 
 Code MIT, prose and derived tables CC BY 4.0. Upstream sources keep their own terms — see [NOTICE.md](NOTICE.md). Nothing here redistributes source data.
 
+## Citing this
+
+Archived on Zenodo. Use the **concept DOI** to cite "this work, any version", or the
+version DOI to cite exactly what you read:
+
+- Concept DOI (always resolves to the latest version): [`10.5281/zenodo.24467168`](https://doi.org/10.5281/zenodo.24467168)
+- This version (`v0.1.0`): [`10.5281/zenodo.24467169`](https://doi.org/10.5281/zenodo.24467169)
+
+```bibtex
+@software{evertse_sa_sme_data_2026,
+  author    = {Evertse, Tim},
+  title     = {sa-sme-data: what South Africa's public data says about small business and entrepreneurship},
+  year      = {2026},
+  version   = {v0.1.0},
+  doi       = {10.5281/zenodo.24467169},
+  url       = {https://github.com/realtimshady16/sa-sme-data}
+}
+```
+
+For a *figure*, cite the primary publisher (Stats SA, SARS/National Treasury, National
+Treasury) as named in [NOTICE.md](NOTICE.md); for the *analysis*, cite this repository.
+
 ## Citation
 
-See [CITATION.cff](CITATION.cff).
+Metadata in [CITATION.cff](CITATION.cff).

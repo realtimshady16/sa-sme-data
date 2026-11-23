@@ -7,8 +7,10 @@ abstract: >-
   Derived from Statistics South Africa unit records, SARS/National Treasury tax
   statistics, and National Treasury budget and procurement data.
 authors:
-  - family-names: Tim
-    # add given-names and an ORCID here before publishing
+  - family-names: Evertse
+    given-names: Tim
+    # add an ORCID here if you want the record linked to it
+type: software
 version: 0.1.0
 date-released: "2026-11-23"
 license: CC-BY-4.0
@@ -22,3 +24,6 @@ keywords:
   - employment
   - public data
   - statistics
+message: >-
+  Code is MIT licensed; prose and derived tables are CC BY 4.0. If you use this
+  analysis, cite this repository and the primary sources named in NOTICE.md.
